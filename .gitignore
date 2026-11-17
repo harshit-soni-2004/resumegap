@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Local analytics data store & private test data
+/data
+data/
+/test-data
+test-data/
+!.env.example
