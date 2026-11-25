@@ -14,11 +14,16 @@ export interface BulletSuggestion {
   hasMetricPlaceholder: boolean;
   actionVerbUsed: string;
   explanation: string;
+  warning?: string;
+  isFlaggedOutcome: boolean;
+  flagReason?: string;
   status?: 'pending' | 'accepted' | 'rejected';
 }
 
 export interface ATSScoreBreakdown {
   overallScore: number; // 0-100
+  roleFitScore: number; // 0-100 (Keywords + Seniority fit to target JD)
+  resumeQualityScore: number; // 0-100 (Quantified impact + Section completeness)
   keywordScore: number; // 0-100 (50% weight)
   quantifiedScore: number; // 0-100 (25% weight)
   seniorityScore: number; // 0-100 (15% weight)

@@ -5,7 +5,7 @@ import { Redis } from '@upstash/redis';
 
 export async function GET(request: Request) {
   // Reading request.url ensures this route handler is evaluated dynamically at runtime
-  const _url = new URL(request.url);
+  void new URL(request.url);
   const isProd = process.env.NODE_ENV === 'production';
 
   // 1. Check Gemini

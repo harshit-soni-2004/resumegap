@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ThumbsUp, ThumbsDown, CheckCircle2, MessageSquare, Send } from 'lucide-react';
+import { ThumbsUp, ThumbsDown, CheckCircle2, Send } from 'lucide-react';
 import { getOrCreateSessionId } from '@/lib/client-analytics';
 
 interface FeedbackWidgetProps {
@@ -33,7 +33,6 @@ export default function FeedbackWidget({ score }: FeedbackWidgetProps) {
       setSubmitted(true);
     } catch (err) {
       console.error('Feedback submit error', err);
-      // Still show pleasant submitted state
       setSubmitted(true);
     } finally {
       setIsSubmitting(false);
@@ -42,12 +41,12 @@ export default function FeedbackWidget({ score }: FeedbackWidgetProps) {
 
   if (submitted) {
     return (
-      <div className="bg-white rounded-2xl border border-emerald-200 p-6 text-center shadow-sm">
-        <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 mb-2">
-          <CheckCircle2 className="w-5 h-5" />
+      <div className="bg-[rgba(17,17,28,0.60)] backdrop-blur-xl rounded-3xl border border-[rgba(52,211,153,0.3)] p-6 md:p-8 text-center shadow-2xl animate-fade-in">
+        <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-[rgba(52,211,153,0.15)] text-[#34D399] mb-3">
+          <CheckCircle2 className="w-6 h-6" />
         </div>
-        <h4 className="text-sm font-bold text-slate-900">Thank you for your feedback!</h4>
-        <p className="text-xs text-slate-500 mt-1">
+        <h4 className="text-base font-bold text-[#F5F5FA]">Thank you for your feedback!</h4>
+        <p className="text-xs text-[#8A8AA3] mt-1 max-w-md mx-auto">
           Your input directly guides our ATS model improvements for graduating engineers across India.
         </p>
       </div>
@@ -55,11 +54,11 @@ export default function FeedbackWidget({ score }: FeedbackWidgetProps) {
   }
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+    <div className="bg-[rgba(17,17,28,0.60)] backdrop-blur-xl rounded-3xl border border-[rgba(255,255,255,0.08)] p-6 md:p-8 shadow-2xl">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h4 className="text-sm font-bold text-slate-900">Did this analysis help your resume?</h4>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <h4 className="text-sm font-bold text-[#F5F5FA]">Did this analysis help your resume?</h4>
+          <p className="text-xs text-[#8A8AA3] mt-0.5">
             Your 1-click answer powers our anonymous product evaluation.
           </p>
         </div>
@@ -68,46 +67,45 @@ export default function FeedbackWidget({ score }: FeedbackWidgetProps) {
           <button
             disabled={isSubmitting}
             onClick={() => handleSubmit(true)}
-            className={`flex items-center gap-2 px-4 py-2.5 min-h-[44px] rounded-xl text-xs font-semibold border transition-all ${
+            className={`flex items-center gap-2 px-4 py-2.5 min-h-[44px] rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
               selectedHelpful === true
-                ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-emerald-50 hover:text-emerald-700'
+                ? 'bg-[#34D399] text-[#0A0A12] border-[#34D399] font-bold shadow-md shadow-[#34D399]/20'
+                : 'bg-[#181826] text-[#34D399] border-[rgba(52,211,153,0.25)] hover:bg-[#34D399] hover:text-[#0A0A12]'
             }`}
           >
-            <ThumbsUp className="w-4 h-4 text-emerald-600" />
+            <ThumbsUp className="w-4 h-4 text-[#34D399]" />
             <span>Yes, helpful!</span>
           </button>
 
           <button
             disabled={isSubmitting}
             onClick={() => handleSubmit(false)}
-            className={`flex items-center gap-2 px-4 py-2.5 min-h-[44px] rounded-xl text-xs font-semibold border transition-all ${
+            className={`flex items-center gap-2 px-4 py-2.5 min-h-[44px] rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
               selectedHelpful === false
-                ? 'bg-rose-600 text-white border-rose-600 shadow-sm'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-rose-50 hover:text-rose-700'
+                ? 'bg-[#FB7185] text-[#0A0A12] border-[#FB7185] font-bold shadow-md shadow-[#FB7185]/20'
+                : 'bg-[#181826] text-[#FB7185] border-[rgba(251,113,133,0.25)] hover:bg-[#FB7185] hover:text-[#0A0A12]'
             }`}
           >
-            <ThumbsDown className="w-4 h-4 text-rose-500" />
+            <ThumbsDown className="w-4 h-4 text-[#FB7185]" />
             <span>Needs work</span>
           </button>
         </div>
       </div>
 
       {selectedHelpful !== null && !submitted && (
-        <div className="mt-4 pt-4 border-t border-slate-100 flex items-center gap-2 animate-fade-in">
+        <div className="mt-4 pt-4 border-t border-[rgba(255,255,255,0.08)] flex items-center gap-2.5 animate-fade-in">
           <div className="relative flex-1">
             <input
               type="text"
               value={comment}
               onChange={(e) => setComment(e.target.value)}
-              placeholder="Optional: What could we improve or add? (e.g. specific tech stack)"
-              className="w-full pl-8 pr-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 min-h-[44px]"
+              placeholder="What could be improved? (optional)"
+              className="w-full min-h-[44px] px-4 text-xs text-[#F5F5FA] bg-[#181826] border border-[rgba(255,255,255,0.08)] rounded-xl focus:outline-none focus:border-[#7C5CFF]/60 placeholder-[#8A8AA3]"
             />
-            <MessageSquare className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-3.5" />
           </div>
           <button
             onClick={() => handleSubmit(selectedHelpful, comment)}
-            className="px-4 py-2 min-h-[44px] rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors shrink-0"
+            className="px-4 py-2 min-h-[44px] rounded-xl bg-accent-gradient text-[#0A0A12] font-bold text-xs flex items-center gap-1.5 shadow-md shadow-[#7C5CFF]/20 hover:brightness-110 cursor-pointer"
           >
             <Send className="w-3.5 h-3.5" />
             <span>Send</span>

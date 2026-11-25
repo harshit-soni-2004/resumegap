@@ -1,0 +1,361 @@
+import puppeteer from 'puppeteer';
+import * as fs from 'fs';
+import * as path from 'path';
+
+async function main() {
+  const html = `
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body {
+    background: #07070F;
+    color: #F8F8FC;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    max-width: 1000px;
+  }
+  .card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+  }
+  .card h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #F8F8FC;
+  }
+  .card p {
+    margin: 0;
+    font-size: 12px;
+    color: #8A8AA3;
+    line-height: 1.5;
+  }
+  .logo-box {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-preview {
+    background: rgba(17, 17, 28, 0.7);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+</style>
+</head>
+<body>
+
+  <div>
+    <h1 style="font-size: 24px; margin: 0 0 8px 0; text-align: center;">Geometrical Logo Explorations for ResumeGap</h1>
+    <p style="color: #8A8AA3; text-align: center; margin: 0;">Inspired by the mathematical rigor of ChatGPT, Anthropic, AMD, and NVIDIA</p>
+  </div>
+
+  <div class="grid">
+    <!-- CONCEPT 1: Hexagonal Knot / Mobius Loop (ChatGPT inspired) -->
+    <div class="card">
+      <div class="logo-box">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+          <defs>
+            <linearGradient id="g1-a" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#8B6CFF" />
+              <stop offset="100%" stop-color="#2DD4F5" />
+            </linearGradient>
+            <linearGradient id="g1-b" x1="100%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#2DD4F5" />
+              <stop offset="100%" stop-color="#38BDF8" />
+            </linearGradient>
+            <linearGradient id="g1-c" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#4C3BCF" />
+              <stop offset="100%" stop-color="#8B6CFF" />
+            </linearGradient>
+            <filter id="glow-1" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="3" result="b" />
+              <feMerge>
+                <feMergeNode in="b" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+          <!-- 6-Fold Interlocking Geometrical Knot (Rotational Ribbon Loop) -->
+          <g filter="url(#glow-1)">
+            <!-- 6 folded faceted ribbons that interlock like ChatGPT's rosette -->
+            <path d="M32 10 L44 17 L44 31 L32 24 Z" fill="url(#g1-a)" opacity="0.95" />
+            <path d="M44 17 L52 31 L40 38 L32 24 Z" fill="url(#g1-b)" opacity="0.9" />
+            <path d="M52 31 L44 45 L32 38 L40 24 Z" fill="url(#g1-b)" opacity="0.95" />
+            <path d="M44 45 L32 52 L24 38 L32 38 Z" fill="url(#g1-a)" opacity="0.85" />
+            <path d="M32 52 L20 45 L20 31 L32 38 Z" fill="url(#g1-c)" opacity="0.95" />
+            <path d="M20 45 L12 31 L24 24 L32 38 Z" fill="url(#g1-c)" opacity="0.9" />
+            <path d="M12 31 L20 17 L32 24 L24 38 Z" fill="url(#g1-a)" opacity="0.85" />
+            <path d="M20 17 L32 10 L40 24 L32 24 Z" fill="url(#g1-a)" opacity="0.95" />
+          </g>
+        </svg>
+      </div>
+      <h3>Concept 1: The Hex Knot</h3>
+      <p>Continuous rotational loop inspired by ChatGPT. Interlocking ribbons fold across a central aperture.</p>
+    </div>
+
+    <!-- CONCEPT 2: Interlocking Kinetic Chevrons / The Gap Bridge (AMD + Anthropic inspired) -->
+    <div class="card">
+      <div class="logo-box">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+          <defs>
+            <linearGradient id="g2-v" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#C084FC" />
+              <stop offset="100%" stop-color="#7C5CFF" />
+            </linearGradient>
+            <linearGradient id="g2-c" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#2DD4F5" />
+              <stop offset="100%" stop-color="#0284C7" />
+            </linearGradient>
+            <linearGradient id="g2-b" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#8B6CFF" />
+              <stop offset="100%" stop-color="#2DD4F5" />
+            </linearGradient>
+            <filter id="glow-2" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="3" result="b" />
+              <feMerge>
+                <feMergeNode in="b" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+          <g filter="url(#glow-2)">
+            <!-- Left Chevron (The Candidate) -->
+            <path d="M12 18 L24 10 L30 14 L20 21 L30 28 L24 32 Z" fill="url(#g2-v)" />
+            <!-- Right Chevron (The Market/JD) -->
+            <path d="M52 46 L40 54 L34 50 L44 43 L34 36 L40 32 Z" fill="url(#g2-c)" />
+            <!-- Central Geometric Bridge (The Match Matrix) -->
+            <polygon points="26,24 38,16 46,22 34,30" fill="url(#g2-b)" opacity="0.9" />
+            <polygon points="18,42 26,34 34,40 26,48" fill="url(#g2-b)" opacity="0.7" />
+            <!-- Core Spark -->
+            <polygon points="32,29 35,32 32,35 29,32" fill="#FFFFFF" />
+          </g>
+        </svg>
+      </div>
+      <h3>Concept 2: Dynamic Chevrons</h3>
+      <p>Precision dual-thrust chevrons inspired by AMD. Opposing isometric facets bridge into an aligned core.</p>
+    </div>
+
+    <!-- CONCEPT 3: The Geometric Mobius Prism / Hexagonal Aperture (Anthropic + NVIDIA inspired) -->
+    <div class="card">
+      <div class="logo-box">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+          <defs>
+            <linearGradient id="g3-top" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#C084FC" />
+              <stop offset="100%" stop-color="#8B6CFF" />
+            </linearGradient>
+            <linearGradient id="g3-right" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#2DD4F5" />
+              <stop offset="100%" stop-color="#38BDF8" />
+            </linearGradient>
+            <linearGradient id="g3-left" x1="100%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#4C3BCF" />
+              <stop offset="100%" stop-color="#6366F1" />
+            </linearGradient>
+            <linearGradient id="g3-core" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#FFFFFF" />
+              <stop offset="100%" stop-color="#2DD4F5" />
+            </linearGradient>
+            <filter id="glow-3" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="3.5" result="b" />
+              <feMerge>
+                <feMergeNode in="b" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+          <g filter="url(#glow-3)">
+            <!-- Isometric Folded Hex Prism with Negative Space "Gap" -->
+            <!-- Facet 1: Upper Left to Top -->
+            <path d="M32 8 L48 17.2 L40 22 L32 17.5 L24 22 L16 17.2 Z" fill="url(#g3-top)" />
+            <!-- Facet 2: Right Descending Wing -->
+            <path d="M48 17.2 L48 35.8 L40 40.5 L40 22 Z" fill="url(#g3-right)" />
+            <!-- Facet 3: Bottom Right to Center Bridge -->
+            <path d="M48 35.8 L32 45 L32 36 L40 31.2 Z" fill="url(#g3-right)" opacity="0.8" />
+            <!-- Facet 4: Bottom Left Anchor -->
+            <path d="M32 45 L16 35.8 L24 31.2 L32 36 Z" fill="url(#g3-left)" />
+            <!-- Facet 5: Left Ascending Pillar -->
+            <path d="M16 35.8 L16 17.2 L24 22 L24 40.5 Z" fill="url(#g3-left)" opacity="0.9" />
+            <!-- The Central "Gap" Bridge Cube / Quantum Core -->
+            <polygon points="32,23 38,26.5 38,33.5 32,37 26,33.5 26,26.5" fill="none" stroke="url(#g3-core)" stroke-width="2" />
+            <circle cx="32" cy="30" r="3" fill="#FFFFFF" />
+          </g>
+        </svg>
+      </div>
+      <h3>Concept 3: The Hex-Prism</h3>
+      <p>Isometric structural prism with architectural negative space and floating quantum core.</p>
+    </div>
+
+    <!-- CONCEPT 4: The Continuous Mobius "R" Loop (Anthropic + ChatGPT fusion) -->
+    <div class="card">
+      <div class="logo-box">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+          <defs>
+            <linearGradient id="g4-ribbon1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#C084FC" />
+              <stop offset="50%" stop-color="#8B6CFF" />
+              <stop offset="100%" stop-color="#4C3BCF" />
+            </linearGradient>
+            <linearGradient id="g4-ribbon2" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#2DD4F5" />
+              <stop offset="50%" stop-color="#38BDF8" />
+              <stop offset="100%" stop-color="#8B6CFF" />
+            </linearGradient>
+            <filter id="glow-4" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="3.5" result="b" />
+              <feMerge>
+                <feMergeNode in="b" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+          <g filter="url(#glow-4)">
+            <!-- Pure continuous geometrical ribbon forming an abstract isometric Mobius "R" / Infinity Knot -->
+            <!-- Segment A: Base foundation -->
+            <path d="M16 50 L16 18 C16 14 19 11 23 11 L35 11 C42 11 47 16 47 23 C47 29 42 34 35 34 L25 34"
+                  stroke="url(#g4-ribbon1)" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" />
+            <!-- Segment B: Forward bridging diagonal that interlocks through the center gap -->
+            <path d="M28 32 L46 50"
+                  stroke="url(#g4-ribbon2)" stroke-width="6.5" stroke-linecap="round" />
+            <!-- Modern geometric cut-out spark -->
+            <polygon points="35,22.5 38.5,24.5 38.5,28.5 35,30.5 31.5,28.5 31.5,24.5" fill="#2DD4F5" />
+          </g>
+        </svg>
+      </div>
+      <h3>Concept 4: Mobius "R"</h3>
+      <p>Clean continuous ribbon loop with rounded modern terminals and precision 45° launch bridge.</p>
+    </div>
+
+    <!-- CONCEPT 5: Pure Geometric Torus / 3-Blade Interlocking Propeller (Anthropic / OpenAI style) -->
+    <div class="card">
+      <div class="logo-box">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+          <defs>
+            <linearGradient id="g5-1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#8B6CFF" />
+              <stop offset="100%" stop-color="#4C3BCF" />
+            </linearGradient>
+            <linearGradient id="g5-2" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#2DD4F5" />
+              <stop offset="100%" stop-color="#0284C7" />
+            </linearGradient>
+            <linearGradient id="g5-3" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#F472B6" />
+              <stop offset="100%" stop-color="#8B6CFF" />
+            </linearGradient>
+            <filter id="glow-5" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="3.5" result="b" />
+              <feMerge>
+                <feMergeNode in="b" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+          <g filter="url(#glow-5)">
+            <!-- 3 interlocking geometrical lozenges / twisted mobius blades meeting at 120 degrees -->
+            <!-- Blade 1: Top (12 o'clock to center) -->
+            <path d="M32 10 C37 10 42 14 43 19 L37 32 L27 32 L21 21 C23 14 27 10 32 10 Z" fill="url(#g5-1)" opacity="0.9" />
+            <!-- Blade 2: Bottom Right (4 o'clock to center) -->
+            <path d="M49 42 C46 47 41 49 36 49 L27 38 L32 29 L45 28 C48 32 50 37 49 42 Z" fill="url(#g5-2)" opacity="0.9" />
+            <!-- Blade 3: Bottom Left (8 o'clock to center) -->
+            <path d="M15 42 C14 37 16 32 19 28 L32 29 L37 38 L28 49 C23 49 18 47 15 42 Z" fill="url(#g5-3)" opacity="0.85" />
+            <!-- Core gap aperture -->
+            <circle cx="32" cy="33" r="3.5" fill="#07070F" stroke="#2DD4F5" stroke-width="1.5" />
+          </g>
+        </svg>
+      </div>
+      <h3>Concept 5: The Tri-Vortex</h3>
+      <p>3-fold rotational propeller with geometric lozenges converging at 120° angles around a central aperture.</p>
+    </div>
+
+    <!-- CONCEPT 6: The Modernist Geometric "Gap Bridge" Monogram (Anthropic + NVIDIA) -->
+    <div class="card">
+      <div class="logo-box">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+          <defs>
+            <linearGradient id="g6-a" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#C084FC" />
+              <stop offset="100%" stop-color="#7C5CFF" />
+            </linearGradient>
+            <linearGradient id="g6-b" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#2DD4F5" />
+              <stop offset="100%" stop-color="#06B6D4" />
+            </linearGradient>
+            <filter id="glow-6" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="3.5" result="b" />
+              <feMerge>
+                <feMergeNode in="b" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+          <g filter="url(#glow-6)">
+            <!-- Left vertical pillar with rounded inner notch -->
+            <rect x="14" y="14" width="7" height="36" rx="3.5" fill="url(#g6-a)" />
+            <!-- Upper geometric arch loop -->
+            <path d="M21 17.5 H37 C43.6 17.5 49 22.9 49 29.5 C49 36.1 43.6 41.5 37 41.5 H28"
+                  stroke="url(#g6-a)" stroke-width="7" stroke-linecap="round" />
+            <!-- Floating kinetic diagonal bar (Bridging the gap) -->
+            <line x1="33" y1="36" x2="49" y2="50" stroke="url(#g6-b)" stroke-width="7" stroke-linecap="round" />
+            <!-- Floating precision dot in the aperture -->
+            <circle cx="33" cy="29.5" r="3.5" fill="#FFFFFF" />
+          </g>
+        </svg>
+      </div>
+      <h3>Concept 6: Neo-Aperture</h3>
+      <p>Bold architectural geometric letterform with severed floating diagonal launch bar and central focal dot.</p>
+    </div>
+  </div>
+
+</body>
+</html>
+  `;
+
+  fs.writeFileSync('scripts/logo-preview.html', html, 'utf8');
+
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+  });
+  const page = await browser.newPage();
+  await page.setViewport({ width: 1100, height: 950 });
+  await page.goto('file://' + path.resolve('scripts/logo-preview.html'));
+  
+  const artifactPath = path.resolve('C:/Users/ihars/.gemini/antigravity/brain/36b4d9d9-121e-4acb-ba0d-74d0918d1644/logo_geometric_explorations.png');
+  await page.screenshot({ path: artifactPath });
+  console.log('Saved logo explorations screenshot to:', artifactPath);
+
+  await browser.close();
+}
+
+main().catch(err => {
+  console.error(err);
+  process.exit(1);
+});

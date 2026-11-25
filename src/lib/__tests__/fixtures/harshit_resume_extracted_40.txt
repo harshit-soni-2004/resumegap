@@ -1,0 +1,40 @@
+Harshit SoniMumbai, India
+I [REDACTED_PHONE] • # [REDACTED_EMAIL] • LinkedIn | GitHub | Portfolio
+Summary
+Backend Software Engineer (~1 year across full-time and internship roles; B.Tech IT graduating 2026, coursework completed, available
+for immediate full-time onboarding) specializing in Java 21, Spring Boot 3, Microservices, and AWS cloud infrastructure for fintech
+platforms. Shipped enterprise lending features, a 15-service containerised environment and platform tooling; built an LLM tool-calling
+assistant with server-side guardrails; published applied ML research (IEEE, ICCDS 2025).
+Work Experience
+Veefin Solutions Mumbai, India
+Software Engineer Apr 2026 – Oct 2026
+• Delivered end-to-end collateral-management features (lien registration, valuer-expiry validations, auto-draft saving) across Spring Boot
+REST APIs and Angular 19; adopted across all 5 core Veefin fintech products powering enterprise lending workflows.
+• Containerised a 15-service microservices platform with Docker Compose; standardized Flyway database migrations through schema
+V44, stabilizing Maven CI/CD on Bitbucket Pipelines.
+• Designed and built an internal engineering task manager with the CTO that replaced Jira, eliminating recurring SaaS licensing costs.
+• Hardened the platform’s CIS Level 1 golden AMI, reducing High/Critical findings from 9,305 to 4,380 (53%) and eliminating all 7
+Critical vulnerabilities; built its first ARM64 EKS 1.32 worker AMI, modular Terraform modules (S3, EC2, RDS), and disaster recovery
+patching runbooks.
+TransactBox Mumbai, India
+Software Developer Intern Oct 2025 – Apr 2026
+• Integrated edge services with Spring Cloud Gateway and Eureka service discovery; diagnosed and resolved production routing
+bottlenecks, context paths, and UUID-based persistence anomalies under concurrent load.
+• Built REST APIs for admin-managed filters, enabling zero-downtime, real-time configuration updates without service redeployment.
+Featured Projects
+SpendSense
+Full-Stack Financial Platform – GitHub | Demo
+• Solo-built full-stack financial platform: engineered automated bank statement parser for Indian banking formats (PDF, CSV, Excel; SBI,
+HDFC, ICICI, Axis, Kotak), implementing hash-based transaction deduplication and transfer matching to eliminate double-counting.
+• Implemented merchant categorization combining rule hierarchies, user overrides, and a confidence-gated ML classification model.
+• Built an LLM financial assistant using tool calling with strict server-side guardrails: the model executes pre-approved backend
+calculation APIs and explains verified figures with zero database query access or mathematical hallucination.
+Invoice Financing Platform
+Distributed Marketplace – GitHub | Demo
+• Architected an event-driven invoice discounting marketplace across 6 decoupled Spring Boot microservices; implemented RabbitMQ
+with the Transactional Outbox pattern to guarantee at-least-once message delivery and eliminate lost transactions.
+• Secured APIs using OAuth2 with PKCE; enforced idempotent financial operations via unique idempotency keys and distributed
+locking, ensuring duplicate disbursements and repayments are safely rejected under retries.
+Education
+Dwarakadas J. Sanghvi College of Engineering Mumbai, India
+Bachelor of Technology in Information Technology (CGPA: 7.6/10) 2022 – 2026

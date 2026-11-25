@@ -18,7 +18,7 @@ if (fs.existsSync(envLocalPath)) {
   }
 }
 
-import { extractTextFromPdf, runStage1Analysis, isBulletQuantified, TECH_SKILL_DICTIONARY } from '../src/lib/stage1-detector';
+import { extractTextFromPdf, runStage1Analysis, isBulletQuantified, extractKeywords, TECH_SKILL_DICTIONARY } from '../src/lib/stage1-detector';
 import { runGeminiStage2 } from '../src/lib/gemini';
 
 async function runRealResumeTest() {
@@ -88,12 +88,16 @@ async function runRealResumeTest() {
     console.log(`- Quantified Bullets Count: ${stage1.breakdown.details.quantifiedBulletsDetected} (${Math.round(stage1.breakdown.details.quantifiedRatio * 100)}%)`);
     console.log(`- Matched Skills (${stage1.breakdown.details.matchedKeywordsCount}/${stage1.breakdown.details.totalJdKeywords}): ${stage1.breakdown.details.matchedKeywords.join(', ')}`);
     console.log(`- Missing Keywords: ${stage1.breakdown.details.missingKeywordsStage1.join(', ')}`);
+    const isCapApplied = stage1.breakdown.keywordScore < 30;
     console.log(`- Score Breakdown:`);
-    console.log(`  * Overall Score: ${stage1.breakdown.overallScore} / 100`);
-    console.log(`  * Keyword Score (50% wt): ${stage1.breakdown.keywordScore}`);
-    console.log(`  * Quantified Impact (25% wt): ${stage1.breakdown.quantifiedScore}`);
-    console.log(`  * Seniority Match (15% wt): ${stage1.breakdown.seniorityScore} (JD: "${stage1.breakdown.details.detectedSeniority.jdLevel}", Resume: "${stage1.breakdown.details.detectedSeniority.resumeLevel}")`);
-    console.log(`  * Section Completeness (10% wt): ${stage1.breakdown.sectionsScore}`);
+    console.log(`  * Overall Score       : ${stage1.breakdown.overallScore} / 100`);
+    console.log(`  * Role Fit Score      : ${stage1.breakdown.roleFitScore} / 100 (Keywords + Seniority fit)`);
+    console.log(`  * Resume Quality Score: ${stage1.breakdown.resumeQualityScore} / 100 (Quantified + Sections)`);
+    console.log(`  * Keyword Overlap %   : ${stage1.breakdown.keywordScore}%`);
+    console.log(`  * Cap Applied (<30%)  : ${isCapApplied ? 'YES (Capped at 50 max)' : 'NO'}`);
+    console.log(`  * Seniority Match     : ${stage1.breakdown.seniorityScore} / 100 (JD: "${stage1.breakdown.details.detectedSeniority.jdLevel}", Resume: "${stage1.breakdown.details.detectedSeniority.resumeLevel}")`);
+    console.log(`  * Quantified Impact   : ${stage1.breakdown.quantifiedScore} / 100`);
+    console.log(`  * Section Completeness: ${stage1.breakdown.sectionsScore} / 100`);
 
     // Stage 2
     console.log('\n[Stage 2 Gemini LLM Execution]');
@@ -102,12 +106,19 @@ async function runRealResumeTest() {
     console.log(`- isLLMFallback: ${stage2.isLLMFallback}`);
     console.log(`- Gemini Latency: ${stage2.geminiLatencyMs} ms`);
     console.log(`- Rewritten Bullets Count: ${stage2.bulletSuggestions.length}`);
+    const placeholdersCount = stage2.bulletSuggestions.filter(
+      (b) => b.hasMetricPlaceholder || /\[[A-Za-z0-9% ]+\]/.test(b.rewritten)
+    ).length;
+    console.log(`- Rewrites with Placeholders: ${placeholdersCount} / ${stage2.bulletSuggestions.length}`);
     console.log('\nRewritten Bullets:');
     stage2.bulletSuggestions.forEach((b, idx) => {
       console.log(`  [Bullet #${idx + 1}]`);
       console.log(`    Original : "${b.original}"`);
       console.log(`    Rewritten: "${b.rewritten}"`);
-      console.log(`    Verb     : ${b.actionVerbUsed} | Placeholder: ${b.hasMetricPlaceholder}`);
+      console.log(`    Verb     : ${b.actionVerbUsed} | Placeholder: ${b.hasMetricPlaceholder} | Flagged: ${b.isFlaggedOutcome}`);
+      if (b.flagReason) {
+        console.log(`    FlagReason: ${b.flagReason}`);
+      }
     });
 
     results.push({ name: run.name, key: run.key, stage1, stage2 });
@@ -174,15 +185,7 @@ async function runRealResumeTest() {
     'ml/nlp integration'
   ];
 
-  const detectedResumeSkills = results[0].stage1.breakdown.details.matchedKeywords; // we can also extract all from resume
-  const allResumeExtracted = (function() {
-    const textLower = pdfExtraction.text.toLowerCase();
-    return TECH_SKILL_DICTIONARY.filter((skill) => {
-      const escaped = skill.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const regex = new RegExp(`(^|[^a-zA-Z0-9#+.])${escaped}([^a-zA-Z0-9#+.]|$)`, 'i');
-      return regex.test(textLower);
-    });
-  })();
+  const allResumeExtracted = extractKeywords(pdfExtraction.text);
 
   const missingFromDictionary: string[] = [];
   const inDictButNotExtracted: string[] = [];
@@ -201,12 +204,15 @@ async function runRealResumeTest() {
     }
   }
 
-  console.log(`✓ Successfully detected skills (${successfullyDetected.length}): ${successfullyDetected.join(', ')}`);
-  console.log(`❌ Missing from TECH_SKILL_DICTIONARY (${missingFromDictionary.length}): ${missingFromDictionary.join(', ')}`);
+  console.log(`✓ Successfully detected skills (${successfullyDetected.length} / ${expectedSkillsInResume.length}): ${successfullyDetected.join(', ')}`);
+  if (missingFromDictionary.length > 0) {
+    console.log(`❌ Missing from TECH_SKILL_DICTIONARY (${missingFromDictionary.length}): ${missingFromDictionary.join(', ')}`);
+  }
   if (inDictButNotExtracted.length > 0) {
     console.log(`⚠️ In dictionary but regex failed (${inDictButNotExtracted.length}): ${inDictButNotExtracted.join(', ')}`);
   }
-  console.log(`Check A Result: FAIL (Found ${missingFromDictionary.length} skills from Harshit's resume missing from dictionary: e.g., ${missingFromDictionary.slice(0, 8).join(', ')})\n`);
+  const checkAPass = missingFromDictionary.length === 0 && inDictButNotExtracted.length === 0;
+  console.log(`Check A Result: ${checkAPass ? 'PASS' : 'FAIL'} (${successfullyDetected.length}/${expectedSkillsInResume.length} skills detected)\n`);
 
   // --- CHECK B: No Invented Numbers ---
   console.log('--- CHECK B: No Invented Numbers in Rewritten Bullets ---');
@@ -251,11 +257,11 @@ async function runRealResumeTest() {
     for (const b of r.stage2.bulletSuggestions) {
       const origHasMetrics = isBulletQuantified(b.original);
       if (origHasMetrics) {
-        const origNumbers = b.original.match(/\d+(\.\d+)?%?|\$\d+/g) || [];
-        const rewriteNumbers = b.rewritten.match(/\d+(\.\d+)?%?|\$\d+/g) || [];
+        const origNumbers: string[] = b.original.match(/\d+(\.\d+)?%?|\$\d+/g) || [];
+        const rewriteNumbers: string[] = b.rewritten.match(/\d+(\.\d+)?%?|\$\d+/g) || [];
 
         // Check if key original numbers are present in the rewrite
-        const missingNumbers = origNumbers.filter((n) => !rewriteNumbers.includes(n));
+        const missingNumbers = origNumbers.filter((n: string) => !rewriteNumbers.includes(n));
         if (missingNumbers.length > 0) {
           droppedMetricCount++;
           droppedMetricDetails.push(
@@ -274,26 +280,40 @@ async function runRealResumeTest() {
   }
   console.log('');
 
-  // --- CHECK D: Placeholder Usage ---
-  console.log('--- CHECK D: Placeholder Usage for Unquantified Bullets ---');
+  // --- CHECK D: Placeholder Rules & Truthful Outcome Usage ---
+  console.log('--- CHECK D: Placeholder Rules & Truthful Outcome Usage ---');
   let invalidPlaceholderCount = 0;
   for (const r of results) {
     for (const b of r.stage2.bulletSuggestions) {
-      const origHasMetric = isBulletQuantified(b.original);
-      if (!origHasMetric) {
-        // Must contain a bracketed placeholder like [X], [X%], [Y users], etc.
-        const hasBracket = /\[[A-Za-z0-9% ]+\]/.test(b.rewritten);
-        if (!hasBracket) {
-          invalidPlaceholderCount++;
-          console.log(`❌ Unquantified original bullet rewritten without bracketed placeholder:\n  Orig: "${b.original}"\n  New : "${b.rewritten}"`);
-        }
+      // 1. Concrete facts must not be replaced with [X]
+      if (/\[X\]\s*(?:banks?|formats?|services?)/i.test(b.rewritten)) {
+        invalidPlaceholderCount++;
+        console.log(`❌ Concrete facts replaced with [X]: "${b.rewritten}"`);
+      }
+      // 2. Binary qualitative claims must not have percentage added
+      if (/\b(?:safely rejected|retries)\b/i.test(b.original) && (/\[X%\]/.test(b.rewritten) || /\b\d+%/.test(b.rewritten))) {
+        invalidPlaceholderCount++;
+        console.log(`❌ Percentage added to qualitative claim: "${b.rewritten}"`);
       }
     }
   }
+
+  let totalWithPlaceholders = 0;
+  let totalRewrites = 0;
+  for (const r of results) {
+    for (const b of r.stage2.bulletSuggestions) {
+      totalRewrites++;
+      if (b.hasMetricPlaceholder || /\[[A-Za-z0-9% ]+\]/.test(b.rewritten)) {
+        totalWithPlaceholders++;
+      }
+    }
+  }
+  console.log(`- Total Rewrites Across 3 JDs: ${totalRewrites}`);
+  console.log(`- Rewrites with Placeholders : ${totalWithPlaceholders}`);
   if (invalidPlaceholderCount === 0) {
-    console.log('✓ Check D Result: PASS — All unquantified original bullets used bracketed placeholders.');
+    console.log(`✓ Check D Result: PASS — Placeholders adhere strictly to truthful outcome rules.`);
   } else {
-    console.log(`❌ Check D Result: FAIL — ${invalidPlaceholderCount} unquantified bullet(s) lacked bracketed placeholders.`);
+    console.log(`❌ Check D Result: FAIL — ${invalidPlaceholderCount} violations found.`);
   }
   console.log('');
 

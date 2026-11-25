@@ -91,16 +91,16 @@ export default function UploadDropzone({ onAnalyze, isLoading }: UploadDropzoneP
 
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-4xl mx-auto space-y-6">
-      {/* Sample Auto-fill Callout */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200">
-        <div className="flex items-center gap-2 text-xs text-blue-900 font-medium">
-          <Sparkles className="w-4 h-4 text-blue-600 shrink-0" />
+      {/* Sample Auto-fill Banner */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-4 rounded-2xl bg-[rgba(24,24,38,0.55)] backdrop-blur-md border border-[rgba(255,255,255,0.08)]">
+        <div className="flex items-center gap-2.5 text-xs text-[#F5F5FA] font-medium">
+          <Sparkles className="w-4 h-4 text-[#22D3EE] shrink-0" />
           <span>Want to test immediately? Load a verified Indian SDE Fresher resume & CloudScale JD:</span>
         </div>
         <button
           type="button"
           onClick={handleLoadSample}
-          className="px-3.5 py-2.5 min-h-[44px] rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shrink-0 shadow-sm transition-colors active:scale-95 flex items-center justify-center"
+          className="px-4 py-2.5 min-h-[44px] rounded-xl bg-accent-gradient text-[#0A0A12] text-xs font-bold shrink-0 shadow-md shadow-[#7C5CFF]/20 hover:brightness-110 active:scale-95 transition-all flex items-center justify-center cursor-pointer"
         >
           Load Sample SDE Resume & JD
         </button>
@@ -109,53 +109,53 @@ export default function UploadDropzone({ onAnalyze, isLoading }: UploadDropzoneP
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Left: Resume Upload Area */}
         <div className="flex flex-col">
-          <label className="text-xs font-bold uppercase tracking-wider text-slate-700 mb-2 flex items-center justify-between">
+          <label className="text-xs font-bold uppercase tracking-wider text-[#B4B4C8] mb-2 flex items-center justify-between">
             <span>1. Upload Resume (PDF)</span>
-            <span className="text-[11px] font-normal text-slate-400">Max 5 MB • Text-based</span>
+            <span className="text-[11px] font-normal text-[#8A8AA3]">Max 5 MB • Text-based</span>
           </label>
 
           {useSampleData ? (
-            <div className="flex-1 min-h-[220px] p-5 rounded-2xl border-2 border-dashed border-blue-300 bg-blue-50/40 flex flex-col items-center justify-center text-center relative">
+            <div className="flex-1 min-h-[220px] p-5 rounded-2xl border-2 border-dashed border-[#7C5CFF]/50 bg-[#181826]/80 flex flex-col items-center justify-center text-center relative">
               <button
                 type="button"
                 onClick={handleClear}
-                className="absolute top-2 right-2 w-11 h-11 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-200 transition-colors"
+                className="absolute top-2 right-2 w-11 h-11 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl text-[#8A8AA3] hover:text-[#F5F5FA] hover:bg-[rgba(255,255,255,0.08)] transition-colors cursor-pointer"
                 title="Remove sample"
               >
                 <X className="w-5 h-5" />
               </button>
-              <div className="w-12 h-12 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center mb-2">
+              <div className="w-12 h-12 rounded-xl bg-[rgba(124,92,255,0.15)] text-[#22D3EE] flex items-center justify-center mb-2">
                 <FileText className="w-6 h-6" />
               </div>
-              <h4 className="text-sm font-bold text-slate-900">Sample SDE Resume Loaded</h4>
-              <p className="text-xs text-slate-500 mt-1 max-w-xs">
+              <h4 className="text-sm font-bold text-[#F5F5FA]">Sample SDE Resume Loaded</h4>
+              <p className="text-xs text-[#B4B4C8] mt-1 max-w-xs">
                 Arjun Patel — B.Tech CS 2025 (PES University, React, Node.js, PostgreSQL)
               </p>
-              <span className="mt-3 text-[11px] font-semibold text-blue-700 bg-blue-100 px-2.5 py-0.5 rounded-full">
+              <span className="mt-3 text-[11px] font-semibold text-[#22D3EE] bg-[rgba(124,92,255,0.2)] border border-[#7C5CFF]/30 px-3 py-1 rounded-full">
                 Ready for Analysis
               </span>
             </div>
           ) : selectedFile ? (
-            <div className="flex-1 min-h-[220px] p-5 rounded-2xl border border-emerald-300 bg-emerald-50/30 flex flex-col items-center justify-center text-center relative">
+            <div className="flex-1 min-h-[220px] p-5 rounded-2xl border border-[rgba(52,211,153,0.3)] bg-[rgba(52,211,153,0.05)] flex flex-col items-center justify-center text-center relative">
               <button
                 type="button"
                 onClick={handleClear}
-                className="absolute top-2 right-2 w-11 h-11 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-200 transition-colors"
+                className="absolute top-2 right-2 w-11 h-11 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl text-[#8A8AA3] hover:text-[#F5F5FA] hover:bg-[rgba(255,255,255,0.08)] transition-colors cursor-pointer"
                 title="Remove file"
               >
                 <X className="w-5 h-5" />
               </button>
-              <div className="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center mb-2">
+              <div className="w-12 h-12 rounded-xl bg-[rgba(52,211,153,0.15)] text-[#34D399] flex items-center justify-center mb-2">
                 <CheckCircle2 className="w-6 h-6" />
               </div>
-              <h4 className="text-sm font-bold text-slate-900 truncate max-w-xs">{selectedFile.name}</h4>
-              <p className="text-xs text-slate-500 mt-1">
+              <h4 className="text-sm font-bold text-[#F5F5FA] truncate max-w-xs">{selectedFile.name}</h4>
+              <p className="text-xs text-[#8A8AA3] mt-1">
                 {(selectedFile.size / 1024).toFixed(1)} KB • PDF Ready
               </p>
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="mt-3 min-h-[44px] px-3 py-2 text-xs text-slate-600 hover:text-slate-900 underline font-medium inline-flex items-center justify-center"
+                className="mt-3 min-h-[44px] px-3.5 py-2 text-xs text-[#22D3EE] hover:underline font-medium inline-flex items-center justify-center cursor-pointer"
               >
                 Change PDF
               </button>
@@ -165,7 +165,7 @@ export default function UploadDropzone({ onAnalyze, isLoading }: UploadDropzoneP
               onDragOver={(e) => e.preventDefault()}
               onDrop={handleDrop}
               onClick={() => fileInputRef.current?.click()}
-              className="flex-1 min-h-[220px] p-5 rounded-2xl border-2 border-dashed border-slate-300 hover:border-blue-500 bg-slate-50/50 hover:bg-blue-50/20 transition-all flex flex-col items-center justify-center text-center cursor-pointer group"
+              className="flex-1 min-h-[220px] p-5 rounded-2xl border-2 border-dashed border-[rgba(255,255,255,0.12)] hover:border-[#7C5CFF]/60 bg-[rgba(24,24,38,0.45)] backdrop-blur-md hover:bg-[rgba(24,24,38,0.65)] transition-all flex flex-col items-center justify-center text-center cursor-pointer group"
             >
               <input
                 ref={fileInputRef}
@@ -174,13 +174,13 @@ export default function UploadDropzone({ onAnalyze, isLoading }: UploadDropzoneP
                 className="hidden"
                 onChange={(e) => handleFileChange(e.target.files?.[0] || null)}
               />
-              <div className="w-12 h-12 rounded-xl bg-white border border-slate-200 text-slate-600 group-hover:text-blue-600 group-hover:scale-105 transition-all shadow-sm flex items-center justify-center mb-3">
+              <div className="w-12 h-12 rounded-xl bg-[#11111C] border border-[rgba(255,255,255,0.08)] text-[#8A8AA3] group-hover:text-[#22D3EE] group-hover:scale-105 transition-all shadow-sm flex items-center justify-center mb-3">
                 <Upload className="w-6 h-6" />
               </div>
-              <p className="text-sm font-semibold text-slate-800">
+              <p className="text-sm font-semibold text-[#F5F5FA]">
                 Click or drag & drop your resume PDF
               </p>
-              <p className="text-xs text-slate-500 mt-1">
+              <p className="text-xs text-[#8A8AA3] mt-1">
                 Supports single or multi-page PDF up to 5MB
               </p>
             </div>
@@ -189,9 +189,9 @@ export default function UploadDropzone({ onAnalyze, isLoading }: UploadDropzoneP
 
         {/* Right: Target Job Description Textarea */}
         <div className="flex flex-col">
-          <label className="text-xs font-bold uppercase tracking-wider text-slate-700 mb-2 flex items-center justify-between">
+          <label className="text-xs font-bold uppercase tracking-wider text-[#B4B4C8] mb-2 flex items-center justify-between">
             <span>2. Target Job Description (JD)</span>
-            <span className="text-[11px] font-normal text-slate-400">
+            <span className="text-[11px] font-normal text-[#8A8AA3]">
               {jobDescription.length} characters
             </span>
           </label>
@@ -201,15 +201,15 @@ export default function UploadDropzone({ onAnalyze, isLoading }: UploadDropzoneP
             onChange={(e) => setJobDescription(e.target.value)}
             disabled={isLoading}
             placeholder="Paste the target job description here (Role, Responsibilities, Required Tech Stack, Qualifications)..."
-            className="flex-1 min-h-[220px] w-full p-4 text-xs text-slate-800 bg-white border border-slate-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 leading-relaxed resize-none transition-colors"
+            className="flex-1 min-h-[220px] w-full p-4 text-xs text-[#F5F5FA] bg-[rgba(24,24,38,0.45)] backdrop-blur-md border border-[rgba(255,255,255,0.08)] rounded-2xl focus:outline-none focus:border-[#7C5CFF]/60 placeholder-[#8A8AA3] leading-relaxed resize-none transition-colors"
           />
         </div>
       </div>
 
       {/* Error display */}
       {errorMessage && (
-        <div className="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-start gap-2.5 animate-shake">
-          <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+        <div className="p-4 rounded-xl bg-[rgba(251,113,133,0.1)] border border-[rgba(251,113,133,0.25)] text-[#FB7185] text-xs flex items-start gap-2.5">
+          <AlertCircle className="w-4 h-4 text-[#FB7185] shrink-0 mt-0.5" />
           <span>{errorMessage}</span>
         </div>
       )}
@@ -219,11 +219,11 @@ export default function UploadDropzone({ onAnalyze, isLoading }: UploadDropzoneP
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full sm:w-auto min-w-[280px] min-h-[48px] px-8 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-sm shadow-lg shadow-blue-500/25 transition-all disabled:opacity-60 disabled:cursor-not-allowed active:scale-98 flex items-center justify-center gap-2 mx-auto"
+          className="w-full sm:w-auto min-w-[280px] min-h-[48px] px-8 py-3.5 rounded-2xl bg-accent-gradient text-[#0A0A12] font-bold text-sm shadow-lg shadow-[#7C5CFF]/25 hover:brightness-110 transition-all disabled:opacity-60 disabled:cursor-not-allowed active:scale-[0.98] flex items-center justify-center gap-2 mx-auto cursor-pointer"
         >
           {isLoading ? (
             <>
-              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              <div className="w-4 h-4 border-2 border-[#0A0A12]/30 border-t-[#0A0A12] rounded-full animate-spin" />
               <span>Analyzing ATS Gaps...</span>
             </>
           ) : (
@@ -233,11 +233,11 @@ export default function UploadDropzone({ onAnalyze, isLoading }: UploadDropzoneP
             </>
           )}
         </button>
-        <p className="text-[11px] text-slate-400 mt-2">
-          ⚡ Sub-5s analysis • Deterministic ATS score • No login required
+        <p className="text-[11px] text-[#8A8AA3] mt-2">
+          ⚡ Usually under 5 seconds • Deterministic ATS score • No sign-up needed
         </p>
-        <p className="text-[11px] text-emerald-700 font-medium mt-1 flex items-center justify-center gap-1">
-          <span>🔒 Your resume is processed in memory and never stored.</span>
+        <p className="text-[11px] text-[#34D399] font-medium mt-1 flex items-center justify-center gap-1">
+          <span>🔒 Not stored by ResumeGap. Text is sent to Google&apos;s Gemini API for analysis.</span>
         </p>
       </div>
     </form>

@@ -1,0 +1,303 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body {
+    background: #07070F;
+    color: #F8F8FC;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+  }
+  .header-card {
+    background: rgba(17, 17, 28, 0.75);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 680px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+  .brand-group {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .wordmark-title {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #FFFFFF;
+  }
+  .wordmark-title span {
+    color: #2DD4F5;
+  }
+  .copilot-badge {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    background: rgba(139, 108, 255, 0.12);
+    border: 1px solid rgba(139, 108, 255, 0.35);
+    color: #2DD4F5;
+  }
+  .subtext {
+    font-size: 11px;
+    color: #8A8AA3;
+    margin-top: 2px;
+  }
+  .label-tag {
+    font-size: 13px;
+    font-weight: 600;
+    color: #B4B4C8;
+    background: rgba(255,255,255,0.06);
+    padding: 6px 12px;
+    border-radius: 8px;
+  }
+</style>
+</head>
+<body>
+
+  <div style="text-align: center; max-width: 680px;">
+    <h2 style="font-size: 22px; margin: 0 0 6px 0;">Navbar Header Mockups with Geometric Logo Concepts</h2>
+    <p style="color: #8A8AA3; margin: 0; font-size: 13px;">Tested inside the actual glass navbar container with live typography</p>
+  </div>
+
+  <!-- CANDIDATE A: The Interlocking Geometric Hex-Knot (ChatGPT / Mobius style) -->
+  <div>
+    <div style="margin-bottom: 8px; font-size: 13px; font-weight: 600; color: #8B6CFF;">OPTION A: The Hex-Knot (Interlocking Mobius Rosette — like ChatGPT)</div>
+    <div class="header-card">
+      <div class="brand-group">
+        <!-- SVG A -->
+        <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
+          <defs>
+            <linearGradient id="optA-g1" x1="0" y1="0" x2="42" y2="42" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#C084FC" />
+              <stop offset="50%" stopColor="#8B6CFF" />
+              <stop offset="100%" stopColor="#4C3BCF" />
+            </linearGradient>
+            <linearGradient id="optA-g2" x1="42" y1="0" x2="0" y2="42" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#38BDF8" />
+              <stop offset="60%" stopColor="#2DD4F5" />
+              <stop offset="100%" stopColor="#06B6D4" />
+            </linearGradient>
+            <filter id="optA-glow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="1.5" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+          <!-- Outer subtle ambient aura -->
+          <circle cx="21" cy="21" r="18" fill="rgba(139, 108, 255, 0.15)" filter="url(#optA-glow)" />
+          <!-- 6-Fold Interlocking Knot Geometry -->
+          <g filter="url(#optA-glow)">
+            <!-- Ribbon 1 (Top-Left to Center) -->
+            <path d="M 21 5 L 32 11.5 L 32 19 L 21 12.5 Z" fill="url(#optA-g1)" />
+            <!-- Ribbon 2 (Top-Right to Bottom-Right) -->
+            <path d="M 32 11.5 L 37 20.5 L 30.5 24 L 25.5 15.5 Z" fill="url(#optA-g2)" />
+            <!-- Ribbon 3 (Right down to Bottom) -->
+            <path d="M 37 20.5 L 32 29.5 L 25.5 26 L 30.5 17 Z" fill="url(#optA-g2)" opacity="0.9" />
+            <!-- Ribbon 4 (Bottom to Bottom-Left) -->
+            <path d="M 32 29.5 L 21 36 L 21 28.5 L 32 22 Z" fill="url(#optA-g1)" opacity="0.85" />
+            <!-- Ribbon 5 (Bottom-Left to Top-Left) -->
+            <path d="M 21 36 L 10 29.5 L 10 22 L 21 28.5 Z" fill="url(#optA-g1)" />
+            <!-- Ribbon 6 (Left up to Top) -->
+            <path d="M 10 29.5 L 5 20.5 L 11.5 17 L 16.5 26 Z" fill="url(#optA-g2)" />
+            <path d="M 5 20.5 L 10 11.5 L 16.5 15 L 11.5 24 Z" fill="url(#optA-g2)" opacity="0.95" />
+            <path d="M 10 11.5 L 21 5 L 21 12.5 L 10 19 Z" fill="url(#optA-g1)" />
+          </g>
+          <!-- Central Aperture Spark -->
+          <circle cx="21" cy="20.5" r="2.2" fill="#FFFFFF" />
+        </svg>
+
+        <div>
+          <div class="wordmark-title">
+            Resume<span>Gap</span>
+            <span class="copilot-badge">AI + ATS COPILOT</span>
+          </div>
+          <div class="subtext">Engineered for Off-Campus Indian Engineering Grads</div>
+        </div>
+      </div>
+      <div class="label-tag">Option A</div>
+    </div>
+  </div>
+
+  <!-- CANDIDATE B: The Dual Kinetic Chevrons / "The Convergent Diamond" (AMD / Anthropic style) -->
+  <div>
+    <div style="margin-bottom: 8px; font-size: 13px; font-weight: 600; color: #2DD4F5;">OPTION B: Convergent Chevrons (Precision Interlocking Diamond — like AMD & Anthropic)</div>
+    <div class="header-card">
+      <div class="brand-group">
+        <!-- SVG B -->
+        <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
+          <defs>
+            <linearGradient id="optB-v" x1="0" y1="0" x2="42" y2="42" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#C084FC" />
+              <stop offset="60%" stopColor="#8B6CFF" />
+              <stop offset="100%" stopColor="#4C3BCF" />
+            </linearGradient>
+            <linearGradient id="optB-c" x1="42" y1="42" x2="0" y2="0" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#38BDF8" />
+              <stop offset="60%" stopColor="#2DD4F5" />
+              <stop offset="100%" stopColor="#06B6D4" />
+            </linearGradient>
+            <linearGradient id="optB-bg" x1="0" y1="0" x2="42" y2="42" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#15122B" />
+              <stop offset="100%" stopColor="#070611" />
+            </linearGradient>
+            <filter id="optB-glow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="2" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+          <!-- Background Plinth -->
+          <rect x="1" y="1" width="40" height="40" rx="11" fill="url(#optB-bg)" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
+          <g filter="url(#optB-glow)">
+            <!-- Upper Left Chevron (The Candidate / Skills) -->
+            <path d="M 9 19 L 21 7 L 27 13 L 18 21 L 24 27 L 18 33 Z" fill="url(#optB-v)" />
+            <!-- Lower Right Chevron (The Job / Market) -->
+            <path d="M 33 23 L 21 35 L 15 29 L 24 21 L 18 15 L 24 9 Z" fill="url(#optB-c)" />
+            <!-- Central Bridging Spark Matrix -->
+            <polygon points="21,18 24,21 21,24 18,21" fill="#FFFFFF" />
+          </g>
+        </svg>
+
+        <div>
+          <div class="wordmark-title">
+            Resume<span>Gap</span>
+            <span class="copilot-badge">AI + ATS COPILOT</span>
+          </div>
+          <div class="subtext">Engineered for Off-Campus Indian Engineering Grads</div>
+        </div>
+      </div>
+      <div class="label-tag">Option B</div>
+    </div>
+  </div>
+
+  <!-- CANDIDATE C: The Geometric Hex-Aperture / Penrose Bridge (Anthropic / NVIDIA / DeepTech) -->
+  <div>
+    <div style="margin-bottom: 8px; font-size: 13px; font-weight: 600; color: #C084FC;">OPTION C: The Hex-Aperture (Isometric Deep-Tech Prism — like NVIDIA & Anthropic)</div>
+    <div class="header-card">
+      <div class="brand-group">
+        <!-- SVG C -->
+        <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
+          <defs>
+            <linearGradient id="optC-top" x1="0" y1="0" x2="42" y2="42" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#C084FC" />
+              <stop offset="100%" stopColor="#8B6CFF" />
+            </linearGradient>
+            <linearGradient id="optC-right" x1="0" y1="0" x2="42" y2="42" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#2DD4F5" />
+              <stop offset="100%" stopColor="#0284C7" />
+            </linearGradient>
+            <linearGradient id="optC-left" x1="0" y1="0" x2="42" y2="42" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#6366F1" />
+              <stop offset="100%" stopColor="#312E81" />
+            </linearGradient>
+            <filter id="optC-glow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="2" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+          <g filter="url(#optC-glow)">
+            <!-- Isometric Outer Hexagon Outline / Structure -->
+            <!-- Top Arch Facet -->
+            <polygon points="21,5 34,12.5 28,16 21,12 14,16 8,12.5" fill="url(#optC-top)" />
+            <!-- Right Pillar Facet -->
+            <polygon points="34,12.5 34,27.5 28,24 28,16" fill="url(#optC-right)" />
+            <!-- Bottom Right Bridge Facet (Closing the Gap) -->
+            <polygon points="34,27.5 21,35 21,29 28,25" fill="url(#optC-right)" opacity="0.85" />
+            <!-- Bottom Left Anchor Facet -->
+            <polygon points="21,35 8,27.5 14,24 21,28" fill="url(#optC-left)" />
+            <!-- Left Pillar Facet -->
+            <polygon points="8,27.5 8,12.5 14,16 14,24" fill="url(#optC-left)" opacity="0.9" />
+            <!-- Central Quantum Match Core -->
+            <polygon points="21,17 25,19.5 25,24.5 21,27 17,24.5 17,19.5" fill="none" stroke="#2DD4F5" strokeWidth="1.6" />
+            <circle cx="21" cy="22" r="2.2" fill="#FFFFFF" />
+          </g>
+        </svg>
+
+        <div>
+          <div class="wordmark-title">
+            Resume<span>Gap</span>
+            <span class="copilot-badge">AI + ATS COPILOT</span>
+          </div>
+          <div class="subtext">Engineered for Off-Campus Indian Engineering Grads</div>
+        </div>
+      </div>
+      <div class="label-tag">Option C</div>
+    </div>
+  </div>
+
+  <!-- CANDIDATE D: The Architectural Geometric Monogram / "The Kinetic Bridge" (Anthropic style) -->
+  <div>
+    <div style="margin-bottom: 8px; font-size: 13px; font-weight: 600; color: #38BDF8;">OPTION D: The Kinetic Bridge (Architectural Minimalist Polyhedron — Anthropic purity)</div>
+    <div class="header-card">
+      <div class="brand-group">
+        <!-- SVG D -->
+        <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
+          <defs>
+            <linearGradient id="optD-g1" x1="6" y1="6" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#C084FC" />
+              <stop offset="45%" stopColor="#8B6CFF" />
+              <stop offset="100%" stopColor="#4C3BCF" />
+            </linearGradient>
+            <linearGradient id="optD-g2" x1="18" y1="18" x2="38" y2="38" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#38BDF8" />
+              <stop offset="60%" stopColor="#2DD4F5" />
+              <stop offset="100%" stopColor="#06B6D4" />
+            </linearGradient>
+            <filter id="optD-glow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="2" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+          <g filter="url(#optD-glow)">
+            <!-- Left Monolithic Foundation (Candidate Pillar) -->
+            <path d="M 10 9 C 8.3 9 7 10.3 7 12 L 7 30 C 7 31.7 8.3 33 10 33 C 11.7 33 13 31.7 13 30 L 13 12 C 13 10.3 11.7 9 10 9 Z" fill="url(#optD-g1)" />
+            <!-- Upper Architectural Arch -->
+            <path d="M 13 14 H 24 C 28.5 14 32 17.5 32 22 C 32 26.5 28.5 30 24 30 H 18" stroke="url(#optD-g1)" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round" />
+            <!-- Severed Forward Launching Bridge (The "Gap" Crosser) -->
+            <path d="M 23 25 L 34 36" stroke="url(#optD-g2)" strokeWidth="4.8" strokeLinecap="round" />
+            <!-- Precise Geometric Floating Aperture Core -->
+            <circle cx="23" cy="22" r="2.5" fill="#FFFFFF" />
+          </g>
+        </svg>
+
+        <div>
+          <div class="wordmark-title">
+            Resume<span>Gap</span>
+            <span class="copilot-badge">AI + ATS COPILOT</span>
+          </div>
+          <div class="subtext">Engineered for Off-Campus Indian Engineering Grads</div>
+        </div>
+      </div>
+      <div class="label-tag">Option D</div>
+    </div>
+  </div>
+
+</body>
+</html>
+  

@@ -5,6 +5,8 @@ import { checkRateLimit } from '@/lib/rate-limit';
 import { AnalysisResult } from '@/lib/types';
 import { logAnalyticsEvent } from '@/lib/analytics-store';
 
+export const maxDuration = 30;
+
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
 
 export async function POST(req: NextRequest) {
